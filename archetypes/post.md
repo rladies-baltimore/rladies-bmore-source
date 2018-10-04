@@ -46,7 +46,7 @@ bib <- c(
     'BiocStyle' = citation('BiocStyle'),
     'blogdown' = citation('blogdown')[2],
     'knitcitations' = citation('knitcitations'),
-    'sessioninfo' = citation('sessioninfo'),
+    'sessioninfo' = citation('sessioninfo')
 )
 ```
 
