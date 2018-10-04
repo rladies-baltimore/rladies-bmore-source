@@ -1,0 +1,25 @@
+---
+title: "Using R in Industry"
+date: '2018-10-04'
+
+tags:
+  - event
+  - talk
+categories:
+  - event
+  - talk
+---
+
+Come out to our November event to hear talks from three great R Ladies!
+
+This meeting will highlight local Baltimore R-Ladies analyzing data in industry. It will include presentations from three speakers to discuss how they use R in their jobs and examples of projects they work on!
+
+Visit our [Meetup](https://www.meetup.com/rladies-baltimore/events/254235117/) page for more details and to RSVP.
+
+Date: Wednesday, November 14, 2018
+
+Time: 12:00pm
+
+Speakers: Coming soon!
+
+Host: Coming soon!

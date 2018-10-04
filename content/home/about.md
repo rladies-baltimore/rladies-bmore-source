@@ -10,31 +10,39 @@ weight = 5
 # List your academic interests.
 [interests]
   interests = [
-    "Artificial Intelligence",
-    "Computational Linguistics",
-    "Information Retrieval"
+    "R programming",
+    "Diversity"
   ]
 
 # List your qualifications (such as academic degrees).
-[[education.courses]]
-  course = "PhD in Artificial Intelligence"
-  institution = "Stanford University"
-  year = 2012
-
-[[education.courses]]
-  course = "MEng in Artificial Intelligence"
-  institution = "Massachusetts Institute of Technology"
-  year = 2009
-
-[[education.courses]]
-  course = "BSc in Artificial Intelligence"
-  institution = "Massachusetts Institute of Technology"
-  year = 2008
- 
+# [[education.courses]]
+#   course = "PhD in Artificial Intelligence"
+#   institution = "Stanford University"
+#   year = 2012
+# 
+# [[education.courses]]
+#   course = "MEng in Artificial Intelligence"
+#   institution = "Massachusetts Institute of Technology"
+#   year = 2009
+# 
+# [[education.courses]]
+#   course = "BSc in Artificial Intelligence"
+#   institution = "Massachusetts Institute of Technology"
+#   year = 2008
+#  
 +++
 
-# Biography
+# About
 
-Lena Smith is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+R-Ladies Baltimore welcomes members of all R proficiency levels, whether you're a new or aspiring R user, or an experienced R programmer interested in mentoring, networking & expert upskilling. Our non-profit, civil society community is designed to develop our members' R skills & knowledge through social, collaborative learning & sharing. Supporting minority identity access to STEM skills & careers, the Free Software Movement, and contributing to the global R community!
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate. 
+A local chapter of R-Ladies Global, R-Ladies Baltimore exists to promote gender diversity in the R community worldwide. We are pro-actively inclusive of queer, trans, and all minority identities, with additional sensitivity to intersectional identities. Our priority is to provide a safe community space for anyone identifying as a minority gender who is interested in and/or working with R. As a founding principle, there is no cost or charge to participate in any of our R-Ladies communities around the world.
+
+We are part of Global R-Ladies group. Here are some links! You can access our presentations, R scripts and more on our Github account and follow us on twitter to stay up to date about R-Ladies news!
+
+* Event details: [Meetup page](https://www.meetup.com/rladies-baltimore/)
+* Email: [bmore@rladies.org](mailto:bmore@rladies.org)
+* GitHub: [github.com/rladies-baltimore](https://github.com/rladies-baltimore)
+* Twitter: [RLadiesBmore](https://twitter.comer/RLadiesBmore)
+
+For more information about R-Ladies Global, visit [rladies.org](http://rladies.org/).
