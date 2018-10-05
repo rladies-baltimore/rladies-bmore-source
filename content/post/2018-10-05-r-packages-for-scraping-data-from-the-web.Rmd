@@ -1,0 +1,28 @@
+---
+title: R packages for scraping data from the web
+author: L. Collado-Torres
+date: '2018-10-05'
+slug: r-packages-for-scraping-data-from-the-web
+categories:
+  - event
+  - talk
+tags:
+  - event
+  - talk
+---
+
+
+Come out to our January 2019 event to hear talks from XX great R Ladies!
+
+_Describe event briefly_
+
+
+Visit our [Meetup](https://www.meetup.com/rladies-baltimore/events/254235977/) page for more details and to RSVP.
+
+Date: Wednesday, January 16, 2019
+
+Time: 5:30pm
+
+Speakers: XX and ZZ.
+
+Host: [WW](you.com)
