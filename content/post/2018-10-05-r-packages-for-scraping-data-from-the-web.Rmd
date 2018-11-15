@@ -1,28 +1,27 @@
 ---
 title: R packages for scraping data from the web
-author: L. Collado-Torres
-date: '2018-10-05'
+author: Stephanie Hicks
+date: '2019-01-23'
 slug: r-packages-for-scraping-data-from-the-web
 categories:
   - event
-  - talk
+  - vignette
 tags:
   - event
-  - talk
+  - vignette
 ---
 
 
-Come out to our January 2019 event to hear talks from XX great R Ladies!
+Come out to our first event in 2019 on January 23 from 5:30-7pm! 
 
-_Describe event briefly_
-
+We will discuss really useful R packages that can be used to scrape data from the web by walking through some vignettes and tutorials. We plan to focus on [rvest](https://cran.r-project.org/web/packages/rvest/README.html). From the CRAN website it says _"rvest helps you scrape information from web pages. It is designed to work with [magrittr](https://github.com/tidyverse/magrittr) to make it easy to express common web scraping tasks, inspired by libraries like [beautifulsoup](https://pypi.org/project/beautifulsoup4/)."_
 
 Visit our [Meetup](https://www.meetup.com/rladies-baltimore/events/254235977/) page for more details and to RSVP.
 
 Date: Wednesday, January 16, 2019
 
-Time: 5:30pm
+Time: 5:30-7pm
 
-Speakers: XX and ZZ.
+Speakers: Coming soon!
 
-Host: [WW](you.com)
+Host: Stephanie Hicks and Margaret Taub

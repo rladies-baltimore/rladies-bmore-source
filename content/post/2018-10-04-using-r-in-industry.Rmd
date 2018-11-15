@@ -1,25 +1,33 @@
 ---
-title: "Using R in Industry"
+title: Holiday Designs in R and Using R in Industry
+author: Stephanie Hicks
 date: '2018-10-04'
-
+slug: using-r-in-industry
 tags:
   - event
   - talk
+  - coding-event
 categories:
   - event
   - talk
+  - coding-event
 ---
 
-Come out to our November event to hear talks from three great R Ladies!
+Come out to our November 14th event to create your own holiday design in R to send to your friends and families this holiday season to hear a great talk! 
 
-This meeting will highlight local Baltimore R-Ladies analyzing data in industry. It will include presentations from three speakers to discuss how they use R in their jobs and examples of projects they work on!
+
+This meeting will include a group coding event (we're making holiday cards! :D ) and a presentation from a [Christine Zhang](http://underthecurve.github.io/bylines/) who works as a Data Journalist at the [Baltimore Sun](https://twitter.com/baltimoresun) and [Baltimore Sun Data Visualization team](https://twitter.com/baltsundata) to discuss how she uses R in her jobs and examples of projects she works on!
 
 Visit our [Meetup](https://www.meetup.com/rladies-baltimore/events/254235117/) page for more details and to RSVP.
 
+**Details on the location**:
+
 Date: Wednesday, November 14, 2018
 
-Time: 12:00pm
+Time: 12:00-1:30pm
 
-Speakers: Coming soon!
-
-Host: Coming soon!
+Location: 
+Johns Hopkins School of Public Health
+615 N. Wolfe Street
+Baltimore, MD 21205
+(Room W3008 -- 3rd floor)
