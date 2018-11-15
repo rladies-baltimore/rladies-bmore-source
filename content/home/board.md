@@ -21,7 +21,21 @@ weight = 50
 
 <img src="/img/stephanie_hicks.jpg" style="width:20%";/>
 
-Stephanie is...
+[Stephanie](http://www.stephaniehicks.com) is an 
+Assistant Professor at 
+[Johns Hopkins Bloomberg School of Public Health](https://www.jhsph.edu) and a faculty member of the 
+[Johns Hopkins Data Science Lab](https://jhudatascience.org) 
+in Baltimore, MD. Previously, she was a postdoctoral research fellow at
+[Dana-Farber Cancer Institute](https://www.dana-farber.org) and 
+[Harvard T.H. Chan School of Public Health](https://www.hsph.harvard.edu)
+in Boston, MA. She is all about data science education, genomics and statistics using R! Her vision for 
+[R-Ladies Baltimore](https://rladies-baltimore.github.io) is to create
+a community for individuals to learn and contribute to the R community,
+while increasing gender diversity. She holds a Bachelor's degree in
+Mathematics from [Louisiana State University](https://www.lsu.edu) and a
+M.A. and Ph.D. in [Statistics](https://statistics.rice.edu) from
+[Rice University](http://www.rice.edu). 
+
 
 #### Margaret Taub
 
@@ -37,6 +51,11 @@ Rachel is...
 
 #### Gabriela de Queiroz
 
-<img src="/img/gabriela_de_queriroz.jpg" style="width:20%";/>
+<img src="/img/gabriela_de_queriroz.png" style="width:20%";/>
 
-Gabriela is...
+[Gabriela](https://k-roz.com/about/) is the founder of the [global organization R-Ladies](https://rladies.org). She is a Senior Developer 
+Advocate at IBM where she democratizes AI by building tools, launching 
+new open source projects, and improving existing core open source
+frameworks. She likes to mentor and shares her knowledge through 
+mentorship programs, tutorials and talks. She holds 2 Master’s: 
+one in Epidemiology and one in Statistics.
