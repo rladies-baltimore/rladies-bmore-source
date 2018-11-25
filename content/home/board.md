@@ -47,7 +47,15 @@ Margaret is...
 
 <img src="/img/rachael_workman.jpg" style="width:20%";/>
 
-Rachel is...
+Rachel received her BS in Biology from [WV State](http://www.wvstateu.edu),
+with a thesis project focusing on parasite systematics, and her
+MS from [Portland State](https://www.pdx.edu), studying invasive 
+plant ecology and plant-fungal interactions. She is currently a 
+PhD student in the 
+[Biochemistry, Cellular and Molecular Biology](http://bcmb.bs.jhmi.edu) 
+program at 
+[Johns Hopkins School of Medicine](https://www.hopkinsmedicine.org/som/index.html).
+When not doing research or homework she is probably playing with her dogs. 
 
 #### Gabriela de Queiroz
 
