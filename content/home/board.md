@@ -41,7 +41,19 @@ M.A. and Ph.D. in [Statistics](https://statistics.rice.edu) from
 
 <img src="/img/margaret_taub.jpg" style="width:20%";/>
 
-Margaret is...
+Margaret is an Assistant Scientist in the
+[Biostatistics Department](https://www.jhsph.edu/departments/biostatistics/index.html)
+at [Johns Hopkins Bloomberg School of Public Health](https://www.jhsph.edu)
+. Previously, she was a Postdoctoral Fellow in the same department.
+She received her BA in [Mathematics](http://www.math.harvard.edu) from 
+[Harvard University](https://www.harvard.edu) and her PhD in 
+[Statistics](https://statistics.berkeley.edu) from the 
+[University of California, Berkeley](https://www.berkeley.edu). 
+Her research interests are mainly
+in statistical genetics and genomics and she also teaches a large
+undergraduate course in Biostatistics. She tries to convert new 
+users to R whenever possible and loves teaching brand new programmers 
+how powerful a programming language like R can be.
 
 #### Rachel Workman
 
