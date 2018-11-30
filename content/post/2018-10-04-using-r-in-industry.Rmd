@@ -16,7 +16,7 @@ categories:
 Come out to our November 14th event to create your own holiday design in R to send to your friends and families this holiday season to hear a great talk! 
 
 
-This meeting will include a group coding event (we're making holiday cards! :D ) and a presentation from a [Christine Zhang](http://underthecurve.github.io/bylines/) who works as a Data Journalist at the [Baltimore Sun](https://twitter.com/baltimoresun) and [Baltimore Sun Data Visualization team](https://twitter.com/baltsundata) to discuss how she uses R in her jobs and examples of projects she works on!
+This meeting will include a group coding event (we're making holiday cards! :D ) and a presentation from a [Christine Zhang](http://underthecurve.github.io/bylines/) ([slides available here](https://drive.google.com/file/d/1NbIL5s3rlUx3S_GE4MNOWnfQSMefL-6z/view)) who works as a Data Journalist at the [Baltimore Sun](https://twitter.com/baltimoresun) and [Baltimore Sun Data Visualization team](https://twitter.com/baltsundata) to discuss how she uses R in her jobs and examples of projects she works on!
 
 Visit our [Meetup](https://www.meetup.com/rladies-baltimore/events/254235117/) page for more details and to RSVP.
 
