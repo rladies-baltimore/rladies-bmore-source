@@ -20,9 +20,18 @@ We will discuss really useful R packages that can be used to scrape data from th
 
 Visit our [Meetup](https://www.meetup.com/rladies-baltimore/events/254235977/) page for more details and to RSVP.
 
+**Details on the event**:
+
 Date: Wednesday, January 23, 2019
 
 Time: 5:30-7pm
+
+Location: [Allovue](https://allovue.com)
+
+Address: 301 W 29th St, Baltimore, MD 21211
+(Room 2003, on the second floor at the end of the hall)
+
+Details on parking: Parking is available at [R House](https://r.housebaltimore.com) as well as across the street at the police station or in Remington Row’s Garage (entrance on 28th Street, that is paid parking though).
 
 Speakers: Coming soon!
 
