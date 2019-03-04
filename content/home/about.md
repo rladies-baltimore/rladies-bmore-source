@@ -41,6 +41,7 @@ A local chapter of [R-Ladies Global](https://rladies.org), R-Ladies Baltimore ex
 We are part of [Global R-Ladies](https://rladies.org) group. Here are some links! You can access our presentations, R scripts and more on our Github account and follow us on twitter to stay up to date about R-Ladies news!
 
 * Event details: [Meetup page](https://www.meetup.com/rladies-baltimore/)
+    * When attending R-Ladies Baltimore Events, use the [Getting Started](https://docs.google.com/document/d/19oautKZT9MbDq3BFJ_k-VTRCLel0HU9RKutuBCcqQpM/edit?usp=sharing) guide to help get you up and running and plugged into our local community
 * Email: [bmore@rladies.org](mailto:bmore@rladies.org)
 * GitHub: [github.com/rladies-baltimore](https://github.com/rladies-baltimore)
 * Twitter: [RLadiesBmore](https://twitter.comer/RLadiesBmore)
