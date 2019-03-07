@@ -13,7 +13,6 @@ tags:
   - vignette
 ---
 
-
 Come out to our first event in 2019 on January 23 from 5:30-7pm! 
 
 We will discuss really useful R packages that can be used to scrape data from the web by walking through some vignettes and tutorials. We plan to focus on [rvest](https://cran.r-project.org/web/packages/rvest/README.html). From the CRAN website it says _"rvest helps you scrape information from web pages. It is designed to work with [magrittr](https://github.com/tidyverse/magrittr) to make it easy to express common web scraping tasks, inspired by libraries like [beautifulsoup](https://pypi.org/project/beautifulsoup4/)."_ If you don't know what any of that means, no worries! We'll explain the basics and hopefully get you off and running towards scraping data for your own projects! 
