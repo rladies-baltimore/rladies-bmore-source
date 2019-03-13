@@ -1,0 +1,620 @@
+---
+title: Introduction to tidyverse 2019
+author: Stephanie Hicks
+date: '2019-03-13'
+slug: 2019-03-introduction-to-tidyverse
+categories:
+  - blog
+tags:
+  - blog
+header:
+  caption: ''
+  image: ''
+  preview: yes
+output: 
+    html_document:
+        theme: cosmo 
+        toc: true
+        toc_float: true
+        highlight: tango
+        number_sections: false 
+---
+
+# Motivation: Global Health and Economic Data
+
+Throughout this section we will be analyzing global health and 
+economic data. We will be exploring one question: 
+
+1. Is there a relationship between life expectancy and GDP per capita?
+
+We will use the data that has been organized and delivered in the 
+`gapminder` package available in an 
+[R package from Jenny Bryan](https://github.com/jennybc/gapminder).  
+
+To install the `gapminder` data set
+
+```{r, eval = FALSE}
+library(devtools)
+install_github("jennybc/gapminder")
+```
+
+## Loading data into R
+
+```{r, message=FALSE}
+library(gapminder)
+```
+
+### Meet the `gapminder` data frame or "tibble"
+
+By loading the `gapminder` package, we now have access to a 
+data frame by the same name. Get an overview of this with 
+`str()`, which displays the structure of an object.
+
+```{r}
+str(gapminder)
+```
+
+`str()` will provide a sensible description of almost anything and,
+worst case, nothing bad can actually happen. When in doubt, just 
+`str()` some of the recently created objects to get some ideas a
+bout what to do next.
+
+We could print the `gapminder` object itself to screen. However, 
+if you've used R before, you might be reluctant to do this, because
+large datasets just fill up your console and provide very little insight.
+
+This is the first big win for **tibbles**. The 
+[`tidyverse`](https://github.com/hadley/tidyverse) offers a special 
+case of R's default data frame: the "tibble", which is a nod to the 
+actual class of these objects, `tbl_df`.
+
+Now we can boldly print `gapminder` to screen! It is a 
+tibble (and also a regular data frame) and the `tidyverse`
+provides a nice print method that shows the most important 
+stuff and doesn't fill up your Console.
+
+```{r}
+## see? it's still a regular data frame, but also a tibble
+class(gapminder)
+gapminder
+```
+
+This package provides a subset of the data provided by 
+[Gapminder](http://www.gapminder.org/data/). The data comes as a 
+data frame (or `tbl_df` if you're using `dplyr`). We can visit 
+[Gapminder.org documentation page](http://www.gapminder.org/data/documentation/) 
+to obtain information about the columns:
+
+| variable  | meaning                  |
+|:----------|:-------------------------|
+| country   |                          |
+| continent |                          |
+| year      |                          |
+| lifeExp   | life expectancy at birth |
+| pop       | total population         |
+| gdpPercap | per-capita GDP           |
+
+
+If you are dealing with plain vanilla data frames, you can rein in data frame printing explicitly with `head()` and `tail()`. Or turn it into a tibble with `as_tibble()`!
+
+```{r}
+head(gapminder)
+tail(gapminder)
+```
+
+More ways to query basic info on a data frame:
+
+```{r}
+names(gapminder)
+ncol(gapminder)
+length(gapminder)
+dim(gapminder)
+nrow(gapminder)
+```
+
+A statistical overview can be obtained with `summary()`
+
+```{r}
+summary(gapminder)
+```
+
+Although we haven't begun our formal coverage of 
+visualization yet, it's so important for smell-testing 
+dataset that we will make a few figures anyway. 
+Here we use only base R graphics, which are very basic.
+
+```{r first-plots-base-R}
+plot(lifeExp ~ year, gapminder)
+plot(lifeExp ~ gdpPercap, gapminder)
+plot(lifeExp ~ log(gdpPercap), gapminder)
+```
+
+
+
+# Welcome to the "Tidyverse"
+
+The [tidyverse](https://www.tidyverse.org) is _"an opinionated 
+collection of R packages designed for data science. All packages 
+share an underlying philosophy and common APIs."_ 
+
+Another way of putting it is that it's a set of packages 
+that are useful specifically for data manipulation, 
+exploration and visualization with a common philosphy. 
+
+## What is this common philosphy? 
+
+The common philosphy is called _"tidy"_ data. It is 
+a standard way of mapping the meaning of a dataset
+to its structure.
+
+In _tidy_ data:
+
+* Each variable forms a column.
+* Each observation forms a row.
+* Each type of observational unit forms a table.
+
+```{r out.width = "95%", echo = FALSE}
+knitr::include_graphics("http://r4ds.had.co.nz/images/tidy-1.png")
+```
+
+Below, we are interested in transformating the table on 
+the right to the the table on the left, which is 
+considered "tidy". 
+
+```{r out.width = "95%", echo = FALSE}
+knitr::include_graphics("http://r4ds.had.co.nz/images/tidy-9.png")
+```
+
+Working with tidy data is useful because it creates a structured way of
+organizing data values within a data set. This makes the data analysis 
+process more efficient and simplifies the development of data analysis tools
+that work together. In this way, you can focus on the problem you are
+investigating, rather than the uninteresting logistics of data.  
+
+## What is in the `tidyverse`? 
+
+We can install and load the set of R packages using 
+`install.packages("tidyverse")` function. 
+
+When we load the tidyverse package using `library(tidyverse)`, 
+there are six core R packages that load:
+
+* [readr](http://readr.tidyverse.org), for data import.
+* [tidyr](http://tidyr.tidyverse.org), for data tidying.
+* [dplyr](http://dplyr.tidyverse.org), for data wrangling.
+* [ggplot2](http://ggplot2.tidyverse.org), for data visualisation.
+* [purrr](http://purrr.tidyverse.org), for functional programming.
+* [tibble](http://tibble.tidyverse.org), for tibbles, a modern re-imagining of data frames.
+
+Here, we load in the tidyverse. 
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+Because these packages all share the "tidy" philosphy, 
+the data analysis workflow is easier as you move from 
+package to package. 
+
+Today we will focus on `dplyr` and `ggplot2`, for 
+data wrangling and visualiation, but definitely check 
+out the other packages such as `readr`,
+`tidyr`, R packages to import data, 
+to transform data to the "tidy" format. 
+
+
+# Data wrangling 
+
+In the real world, analyzing data rarely involves 
+data that can be easily imported and ready for 
+analysis. According to Wikipedia:
+
+> Data munging or data wrangling is loosely the process 
+of manually converting or mapping data from one "raw" 
+form into another format that allows for more convenient 
+consumption of the data with the help of semi-automated 
+tools.
+
+As you will see in class, one of the most 
+time-consuming aspects of the data analysis 
+process is "data wrangling". This is also 
+is a trendy term for 
+_cleaning up a messy data set_. 
+
+R provides incredibly powerful and flexible language 
+for data wrangling. However, the syntax is somewhat 
+hard to get used to. We will therefore introducing 
+a package that makes the syntax much more like 
+the English language. This package is `dplyr`. 
+
+## The `dplyr` R package
+
+[`dplyr`](http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html) 
+is a powerful R-package to transform and summarize 
+tabular data with rows and columns. 
+
+The package contains a set of functions 
+(or "verbs") to perform common data manipulation
+operations such as filtering for rows, selecting 
+specific columns, re-ordering rows, adding new 
+columns and summarizing data. 
+
+In addition, `dplyr` contains a useful function to
+perform another common task which is the is the 
+"split-apply-combine" concept.  We will discuss 
+that in a little bit. 
+
+### How does it compare to using base functions R?
+
+If you are familiar with R, you are probably familiar 
+with base R functions such as `split()`, `subset()`, 
+`apply()`, `sapply()`, `lapply()`, `tapply()` and 
+`aggregate()`. Compared to base functions in R, the 
+functions in `dplyr` are easier to work with, are 
+more consistent in the syntax and are targeted for 
+data analysis around data frames instead of just vectors. 
+
+The important `dplyr` verbs to remember are: 
+
+`dplyr` verbs | Description
+--- | ---
+`select()` | select columns 
+`filter()` | filter rows
+`arrange()` | re-order or arrange rows
+`mutate()` | create new columns
+`summarize()` | summarize values
+`group_by()` | allows for group operations in the "split-apply-combine" concept
+
+
+
+### Pipe operator: %>%
+
+Before we go any futher, let's introduce the 
+pipe operator: `%>%`. In our `stocks` example,
+we briefly saw this symbol. It is called the
+pipe operator. `dplyr` imports
+this operator from another package 
+(`magrittr`)
+[see help file here](http://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html). 
+This operator allows you to pipe the output 
+from one function to the input of another
+function. Instead of nesting functions 
+(reading from the inside to the 
+outside), the idea of of piping is to 
+read the functions from left to right. 
+
+### `dplyr` verbs in action
+
+The two most basic functions are `select()` and 
+`filter()` which selects columns and filters 
+rows, respectively. 
+
+#### Selecting columns using `select()`
+
+To select all the columns *except* a 
+specific column, use the "-" (subtraction) operator 
+(also known as negative indexing). 
+
+```{r}
+gapminder %>% 
+    select(-lifeExp)
+```
+
+The function `select()` is much more 
+powerful though. To select a range 
+of columns by name, use the ":" (colon) operator
+
+```{r}
+gapminder %>% 
+  select(lifeExp:gdpPercap)
+```
+
+To select all columns that start with the 
+character string "c", use the function `starts_with()`
+
+```{r}
+gapminder %>% 
+  select(starts_with("c"))
+```
+
+Some additional options to select columns based 
+on a specific criteria include
+
+1. `ends_with()` = Select columns that end with 
+a character string
+2. `contains()` = Select columns that contain 
+a character string
+3. `matches()` = Select columns that match a 
+regular expression
+4. `one_of()` = Select columns names that are 
+from a group of names
+
+
+#### Selecting rows using `filter()`
+
+Let's say we only want the data from 2007. 
+
+To do this, we can use the `filter()` function 
+to filter the rows for years in 2007. 
+
+```{r}
+gapminder %>% 
+  filter(year == "2007")
+```
+
+**Note**: you can use the boolean operators 
+(e.g. `>`, `<`, `>=`, `<=`, `!=`, `%in%`) 
+to create logical tests.
+
+For example, if we wanted only years 
+after 2014, we can add a second criteria: 
+
+```{r}
+gapminder %>% 
+  filter(year > 1977)
+```
+
+
+#### Use `mutate()` to add new variables
+
+`mutate()` is a function that defines and inserts new 
+variables into a tibble. You can refer to existing
+variables by name.
+
+```{r}
+gapminder %>%
+    filter(year==2007) %>% 
+    select(-continent) %>%
+    mutate(gdp = pop * gdpPercap)
+```
+
+
+#### Arrange or re-order rows using `arrange()`
+
+To arrange (or re-order) rows by a particular 
+column such as the population, list the name of 
+the column you want to arrange the rows by
+
+```{r}
+gapminder %>%     
+    filter(year==2007) %>%
+    select(-continent) %>%
+    mutate(gdp = pop * gdpPercap) %>% 
+    arrange(gdp)
+```
+
+
+So if we wanted to figure out what were the top three
+countries with the largest `gdpPercap` in 2007, we could 
+use the `desc()` function inside of
+`arrange()` to order rows in a descending order. 
+
+```{r}
+gapminder %>% 
+  filter(year == 2007) %>% 
+  arrange(desc(gdpPercap)) %>% 
+  head(n=3)
+```
+
+
+# Data visualization 
+
+## ggplot2
+
+[`ggplot2`](http://ggplot2.org) is a powerful data exploration and 
+visualization package that can create graphics in R. It was created by 
+[Hadley Wickham](http://had.co.nz) when he was a graduate student at 
+Iowa State University and is based on the principals defined in the 
+[Grammar of Graphics](http://www.amazon.com/The-Grammar-Graphics-Statistics-Computing/dp/0387245448).  
+
+
+#### Why is it useful?
+
+The idea of the Grammar of Graphics is to break the graph into components 
+and handle the components of a graph separately. The `ggplot2` package 
+contains a set of functions that allow us to build the features of the
+graph in a series of layers for versatility and control. 
+
+There are two main plotting functions in `ggplot2`: 
+
+* `qplot()` = a quick plot, similar to the `plot()` function in base R
+* `ggplot()` = a "grammar of graphics" (gg) plot which is made up two 
+components (a `ggplot()` object and at least one `geom` layer)
+
+The `ggplot2` is loaded whenever you load `tidyverse`, but you can 
+always load it formally. 
+
+```{r}
+library(ggplot2)
+```
+
+## Life expectancy and GDP per capita
+
+To try and answer our first question we will make a _scatterplot_. 
+We will do this for the latest entry in our database which is:
+
+```{r}
+max( gapminder$year )
+```
+
+We will first make a quick plot of these two variables. 
+
+#### `qplot`
+
+The `qplot` function  allows us to produce simple plots, similar to 
+`plot` in base R.  The main input of `qplot` is an `x` and `y` argument, 
+but it also accepts a data set (`data`) where the `x` and `y` variables are 
+located.  
+
+To create a scatter-plot of life expectancy versus GDP per capita 
+for 2007, we start by creating a subset of the data with only the 2007 year.
+
+```{r}
+dat <- filter(gapminder, year==2007)
+```
+
+Why does this not work?
+
+```{r,eval=FALSE}
+qplot(x = gdpPercap, y = lifeExp) 
+```
+
+We need to specify where to get these values from. Instead, we can
+use the vectors of `dat` directly
+
+```{r}
+## need to specify where variables are located
+qplot(x = dat$gdpPercap, y = dat$lifeExp) 
+```
+
+However, a cleaner way to do this does not define `dat` and instead uses the `data` argument:
+```{r}
+## instead of having to specify name of data frame each time, just list it once
+qplot(x = gdpPercap, y = lifeExp, data = filter(gapminder, year==2007))
+```
+
+
+If youw ant to add labels to the x and y axis, you can use the 
+`xlab` and `ylab` arguments. You can read the help file to 
+check out other arguments available in the function. 
+
+```{r}
+qplot(x = gdpPercap, y = lifeExp, 
+      data = filter(gapminder, year==2007), 
+      xlab = "GDP per Capita", 
+      ylab = "Life Expectancy", 
+      main = "Data from Gapminder")
+```
+
+From this plot, we see that there is a wide variability in 
+life expectancy for the lower income countries and then 
+somewhat of a positive trend. However, there are many 
+countries with incomes below 5,000 dollars per person and 
+it is hard to see differences between these. Next we 
+will now learn about the grammar of graphics and create 
+a series of visualizations.
+
+## `ggplot`
+
+This function is the implementation of the "Grammar of Graphics" 
+that allows us to build layers of graphical elements to produce
+plots. As explained by Hadley Wickham
+
+> the grammar tells us that a statistical graphic is a mapping from data to aesthetic attributes (colour, shape, size) of geometric objects (points, lines, bars). The plot may also contain statistical transformations of the data and is drawn on a specific coordinates system.
+
+#### Terminology 
+* **ggplot** - the main function where you specify the data set and variables to plot (this is where we define the `x` and
+`y` variable names)
+* **geoms** - geometric objects
+    * e.g. `geom_point()`, `geom_bar()`, `geom_line()`, `geom_histogram()`
+* **aes** - aesthetics
+    * shape, transparency, color, fill, linetype
+* **scales** - define how your data will be plotted
+    * continuous, discrete, log, etc
+
+There are three ways to initialize a `ggplot()` object. 
+
+An empty ggplot object
+
+```{r}
+ggplot()         
+```
+
+A ggplot object associated with a dataset
+
+```{r}
+gapminder %>% 
+    filter(year==2007) %>% 
+    ggplot()
+```
+
+or a ggplot object with a dataset and `x` and `y` defined
+
+```{r}
+gapminder %>% 
+    filter(year==2007) %>% 
+    ggplot(aes(x=gdpPercap, y = lifeExp))
+```
+
+
+#### Creating your first ggplot()
+
+We just used the function `aes()` which is an aesthetic mapping 
+function inside the `ggplot()` object. We use this function to 
+specify plot attributes (e.g. `x` and `y` variable names) that 
+will not change as we add more layers.  
+
+Anything that goes in the `ggplot()` object becomes
+a global setting.  From there, we use the `geom` objects to add 
+more layers to the base `ggplot()` object. 
+These will define what we are interested in 
+illustrating using the data.  
+
+Earlier we noticed that there are many countries with 
+incomes below 5,000 dollars per person and it is hard to see 
+differences between these. We can examine just this variable 
+with a histogram. Here we would use a different geometry:
+
+```{r}
+gapminder %>% 
+    filter(year==2007) %>% 
+    ggplot(aes(x=gdpPercap)) + geom_histogram()
+```
+
+The histogram shows very large tails. We may do better by 
+transforming the data. For data like this, the log 
+transformation seems to work well. It also has a nice economic 
+interpretation related to percent growth: in $log_{10}$ a 
+change of 1 means the country is 10 times richer.
+
+So how do we make the x-axis in the log scale? It is convenient to have [this](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf) cheat sheet around when using ggplot2. From there we see that `scale_x_log10` does what we want.
+
+```{r}
+gapminder %>% 
+    filter(year==2007) %>% 
+    ggplot(aes(x=gdpPercap)) + 
+    geom_histogram(bins=25) + 
+    scale_x_log10()
+```
+
+We no longer see extreme tails. The scatter plot now looks much more informative:
+
+Now we can remake the scatter plot but now make 
+sure the x-axis is in a log-scale
+
+```{r}
+gapminder %>% 
+    filter(year==2007) %>% 
+    ggplot(aes(x=gdpPercap, y = lifeExp)) +
+    geom_point() + scale_x_log10()
+```
+
+We can also do this:
+
+```{r}
+gapminder %>% 
+    filter(year==2007) %>% 
+    ggplot(aes(x=log10(gdpPercap), y = lifeExp)) +
+    geom_point()
+```
+
+We can also use other really great packages, such as `ggrepel`: 
+
+```{r}
+library(ggrepel)
+gapminder %>% 
+    filter(year==2007) %>% 
+    ggplot(aes(x=gdpPercap, y = lifeExp)) +
+    geom_point(color = 'red',) + scale_x_log10() + 
+    geom_text_repel(aes(label = country), size = 2) +
+  theme_classic() 
+```
+
+Now you are ready to make presentation quality data visualizations! 
+
+# Cheatsheets
+
+* [Data Visualization with ggplot2 from RStudio](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
+
+
+
+

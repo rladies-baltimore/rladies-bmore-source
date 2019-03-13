@@ -1,0 +1,707 @@
+---
+title: Introduction to tidyverse 2019
+author: Stephanie Hicks
+date: '2019-03-13'
+slug: 2019-03-introduction-to-tidyverse
+categories:
+  - blog
+tags:
+  - blog
+header:
+  caption: ''
+  image: ''
+  preview: yes
+output: 
+    html_document:
+        theme: cosmo 
+        toc: true
+        toc_float: true
+        highlight: tango
+        number_sections: false 
+---
+
+
+
+<div id="motivation-global-health-and-economic-data" class="section level1">
+<h1>Motivation: Global Health and Economic Data</h1>
+<p>Throughout this section we will be analyzing global health and
+economic data. We will be exploring one question:</p>
+<ol style="list-style-type: decimal">
+<li>Is there a relationship between life expectancy and GDP per capita?</li>
+</ol>
+<p>We will use the data that has been organized and delivered in the
+<code>gapminder</code> package available in an
+<a href="https://github.com/jennybc/gapminder">R package from Jenny Bryan</a>.</p>
+<p>To install the <code>gapminder</code> data set</p>
+<pre class="r"><code>library(devtools)
+install_github(&quot;jennybc/gapminder&quot;)</code></pre>
+<div id="loading-data-into-r" class="section level2">
+<h2>Loading data into R</h2>
+<pre class="r"><code>library(gapminder)</code></pre>
+<div id="meet-the-gapminder-data-frame-or-tibble" class="section level3">
+<h3>Meet the <code>gapminder</code> data frame or “tibble”</h3>
+<p>By loading the <code>gapminder</code> package, we now have access to a
+data frame by the same name. Get an overview of this with
+<code>str()</code>, which displays the structure of an object.</p>
+<pre class="r"><code>str(gapminder)</code></pre>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    1704 obs. of  6 variables:
+##  $ country  : Factor w/ 142 levels &quot;Afghanistan&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ continent: Factor w/ 5 levels &quot;Africa&quot;,&quot;Americas&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+##  $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+##  $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+##  $ gdpPercap: num  779 821 853 836 740 ...</code></pre>
+<p><code>str()</code> will provide a sensible description of almost anything and,
+worst case, nothing bad can actually happen. When in doubt, just
+<code>str()</code> some of the recently created objects to get some ideas a
+bout what to do next.</p>
+<p>We could print the <code>gapminder</code> object itself to screen. However,
+if you’ve used R before, you might be reluctant to do this, because
+large datasets just fill up your console and provide very little insight.</p>
+<p>This is the first big win for <strong>tibbles</strong>. The
+<a href="https://github.com/hadley/tidyverse"><code>tidyverse</code></a> offers a special
+case of R’s default data frame: the “tibble”, which is a nod to the
+actual class of these objects, <code>tbl_df</code>.</p>
+<p>Now we can boldly print <code>gapminder</code> to screen! It is a
+tibble (and also a regular data frame) and the <code>tidyverse</code>
+provides a nice print method that shows the most important
+stuff and doesn’t fill up your Console.</p>
+<pre class="r"><code>## see? it&#39;s still a regular data frame, but also a tibble
+class(gapminder)</code></pre>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<pre class="r"><code>gapminder</code></pre>
+<pre><code>## # A tibble: 1,704 x 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.
+##  6 Afghanistan Asia       1977    38.4 14880372      786.
+##  7 Afghanistan Asia       1982    39.9 12881816      978.
+##  8 Afghanistan Asia       1987    40.8 13867957      852.
+##  9 Afghanistan Asia       1992    41.7 16317921      649.
+## 10 Afghanistan Asia       1997    41.8 22227415      635.
+## # … with 1,694 more rows</code></pre>
+<p>This package provides a subset of the data provided by
+<a href="http://www.gapminder.org/data/">Gapminder</a>. The data comes as a
+data frame (or <code>tbl_df</code> if you’re using <code>dplyr</code>). We can visit
+<a href="http://www.gapminder.org/data/documentation/">Gapminder.org documentation page</a>
+to obtain information about the columns:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">variable</th>
+<th align="left">meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">country</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">continent</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">year</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">lifeExp</td>
+<td align="left">life expectancy at birth</td>
+</tr>
+<tr class="odd">
+<td align="left">pop</td>
+<td align="left">total population</td>
+</tr>
+<tr class="even">
+<td align="left">gdpPercap</td>
+<td align="left">per-capita GDP</td>
+</tr>
+</tbody>
+</table>
+<p>If you are dealing with plain vanilla data frames, you can rein in data frame printing explicitly with <code>head()</code> and <code>tail()</code>. Or turn it into a tibble with <code>as_tibble()</code>!</p>
+<pre class="r"><code>head(gapminder)</code></pre>
+<pre><code>## # A tibble: 6 x 6
+##   country     continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Afghanistan Asia       1952    28.8  8425333      779.
+## 2 Afghanistan Asia       1957    30.3  9240934      821.
+## 3 Afghanistan Asia       1962    32.0 10267083      853.
+## 4 Afghanistan Asia       1967    34.0 11537966      836.
+## 5 Afghanistan Asia       1972    36.1 13079460      740.
+## 6 Afghanistan Asia       1977    38.4 14880372      786.</code></pre>
+<pre class="r"><code>tail(gapminder)</code></pre>
+<pre><code>## # A tibble: 6 x 6
+##   country  continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;    &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Zimbabwe Africa     1982    60.4  7636524      789.
+## 2 Zimbabwe Africa     1987    62.4  9216418      706.
+## 3 Zimbabwe Africa     1992    60.4 10704340      693.
+## 4 Zimbabwe Africa     1997    46.8 11404948      792.
+## 5 Zimbabwe Africa     2002    40.0 11926563      672.
+## 6 Zimbabwe Africa     2007    43.5 12311143      470.</code></pre>
+<p>More ways to query basic info on a data frame:</p>
+<pre class="r"><code>names(gapminder)</code></pre>
+<pre><code>## [1] &quot;country&quot;   &quot;continent&quot; &quot;year&quot;      &quot;lifeExp&quot;   &quot;pop&quot;       &quot;gdpPercap&quot;</code></pre>
+<pre class="r"><code>ncol(gapminder)</code></pre>
+<pre><code>## [1] 6</code></pre>
+<pre class="r"><code>length(gapminder)</code></pre>
+<pre><code>## [1] 6</code></pre>
+<pre class="r"><code>dim(gapminder)</code></pre>
+<pre><code>## [1] 1704    6</code></pre>
+<pre class="r"><code>nrow(gapminder)</code></pre>
+<pre><code>## [1] 1704</code></pre>
+<p>A statistical overview can be obtained with <code>summary()</code></p>
+<pre class="r"><code>summary(gapminder)</code></pre>
+<pre><code>##         country        continent        year         lifeExp     
+##  Afghanistan:  12   Africa  :624   Min.   :1952   Min.   :23.60  
+##  Albania    :  12   Americas:300   1st Qu.:1966   1st Qu.:48.20  
+##  Algeria    :  12   Asia    :396   Median :1980   Median :60.71  
+##  Angola     :  12   Europe  :360   Mean   :1980   Mean   :59.47  
+##  Argentina  :  12   Oceania : 24   3rd Qu.:1993   3rd Qu.:70.85  
+##  Australia  :  12                  Max.   :2007   Max.   :82.60  
+##  (Other)    :1632                                                
+##       pop              gdpPercap       
+##  Min.   :6.001e+04   Min.   :   241.2  
+##  1st Qu.:2.794e+06   1st Qu.:  1202.1  
+##  Median :7.024e+06   Median :  3531.8  
+##  Mean   :2.960e+07   Mean   :  7215.3  
+##  3rd Qu.:1.959e+07   3rd Qu.:  9325.5  
+##  Max.   :1.319e+09   Max.   :113523.1  
+## </code></pre>
+<p>Although we haven’t begun our formal coverage of
+visualization yet, it’s so important for smell-testing
+dataset that we will make a few figures anyway.
+Here we use only base R graphics, which are very basic.</p>
+<pre class="r"><code>plot(lifeExp ~ year, gapminder)</code></pre>
+<p><img src="/post/2019-03-13-introduction-to-tidyverse-2019_files/figure-html/first-plots-base-R-1.png" width="672" /></p>
+<pre class="r"><code>plot(lifeExp ~ gdpPercap, gapminder)</code></pre>
+<p><img src="/post/2019-03-13-introduction-to-tidyverse-2019_files/figure-html/first-plots-base-R-2.png" width="672" /></p>
+<pre class="r"><code>plot(lifeExp ~ log(gdpPercap), gapminder)</code></pre>
+<p><img src="/post/2019-03-13-introduction-to-tidyverse-2019_files/figure-html/first-plots-base-R-3.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="welcome-to-the-tidyverse" class="section level1">
+<h1>Welcome to the “Tidyverse”</h1>
+<p>The <a href="https://www.tidyverse.org">tidyverse</a> is <em>“an opinionated
+collection of R packages designed for data science. All packages
+share an underlying philosophy and common APIs.”</em></p>
+<p>Another way of putting it is that it’s a set of packages
+that are useful specifically for data manipulation,
+exploration and visualization with a common philosphy.</p>
+<div id="what-is-this-common-philosphy" class="section level2">
+<h2>What is this common philosphy?</h2>
+<p>The common philosphy is called <em>“tidy”</em> data. It is
+a standard way of mapping the meaning of a dataset
+to its structure.</p>
+<p>In <em>tidy</em> data:</p>
+<ul>
+<li>Each variable forms a column.</li>
+<li>Each observation forms a row.</li>
+<li>Each type of observational unit forms a table.</li>
+</ul>
+<p><img src="http://r4ds.had.co.nz/images/tidy-1.png" width="95%" /></p>
+<p>Below, we are interested in transformating the table on
+the right to the the table on the left, which is
+considered “tidy”.</p>
+<p><img src="http://r4ds.had.co.nz/images/tidy-9.png" width="95%" /></p>
+<p>Working with tidy data is useful because it creates a structured way of
+organizing data values within a data set. This makes the data analysis
+process more efficient and simplifies the development of data analysis tools
+that work together. In this way, you can focus on the problem you are
+investigating, rather than the uninteresting logistics of data.</p>
+</div>
+<div id="what-is-in-the-tidyverse" class="section level2">
+<h2>What is in the <code>tidyverse</code>?</h2>
+<p>We can install and load the set of R packages using
+<code>install.packages(&quot;tidyverse&quot;)</code> function.</p>
+<p>When we load the tidyverse package using <code>library(tidyverse)</code>,
+there are six core R packages that load:</p>
+<ul>
+<li><a href="http://readr.tidyverse.org">readr</a>, for data import.</li>
+<li><a href="http://tidyr.tidyverse.org">tidyr</a>, for data tidying.</li>
+<li><a href="http://dplyr.tidyverse.org">dplyr</a>, for data wrangling.</li>
+<li><a href="http://ggplot2.tidyverse.org">ggplot2</a>, for data visualisation.</li>
+<li><a href="http://purrr.tidyverse.org">purrr</a>, for functional programming.</li>
+<li><a href="http://tibble.tidyverse.org">tibble</a>, for tibbles, a modern re-imagining of data frames.</li>
+</ul>
+<p>Here, we load in the tidyverse.</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<p>Because these packages all share the “tidy” philosphy,
+the data analysis workflow is easier as you move from
+package to package.</p>
+<p>Today we will focus on <code>dplyr</code> and <code>ggplot2</code>, for
+data wrangling and visualiation, but definitely check
+out the other packages such as <code>readr</code>,
+<code>tidyr</code>, R packages to import data,
+to transform data to the “tidy” format.</p>
+</div>
+</div>
+<div id="data-wrangling" class="section level1">
+<h1>Data wrangling</h1>
+<p>In the real world, analyzing data rarely involves
+data that can be easily imported and ready for
+analysis. According to Wikipedia:</p>
+<blockquote>
+<p>Data munging or data wrangling is loosely the process
+of manually converting or mapping data from one “raw”
+form into another format that allows for more convenient
+consumption of the data with the help of semi-automated
+tools.</p>
+</blockquote>
+<p>As you will see in class, one of the most
+time-consuming aspects of the data analysis
+process is “data wrangling”. This is also
+is a trendy term for
+<em>cleaning up a messy data set</em>.</p>
+<p>R provides incredibly powerful and flexible language
+for data wrangling. However, the syntax is somewhat
+hard to get used to. We will therefore introducing
+a package that makes the syntax much more like
+the English language. This package is <code>dplyr</code>.</p>
+<div id="the-dplyr-r-package" class="section level2">
+<h2>The <code>dplyr</code> R package</h2>
+<p><a href="http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html"><code>dplyr</code></a>
+is a powerful R-package to transform and summarize
+tabular data with rows and columns.</p>
+<p>The package contains a set of functions
+(or “verbs”) to perform common data manipulation
+operations such as filtering for rows, selecting
+specific columns, re-ordering rows, adding new
+columns and summarizing data.</p>
+<p>In addition, <code>dplyr</code> contains a useful function to
+perform another common task which is the is the
+“split-apply-combine” concept. We will discuss
+that in a little bit.</p>
+<div id="how-does-it-compare-to-using-base-functions-r" class="section level3">
+<h3>How does it compare to using base functions R?</h3>
+<p>If you are familiar with R, you are probably familiar
+with base R functions such as <code>split()</code>, <code>subset()</code>,
+<code>apply()</code>, <code>sapply()</code>, <code>lapply()</code>, <code>tapply()</code> and
+<code>aggregate()</code>. Compared to base functions in R, the
+functions in <code>dplyr</code> are easier to work with, are
+more consistent in the syntax and are targeted for
+data analysis around data frames instead of just vectors.</p>
+<p>The important <code>dplyr</code> verbs to remember are:</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><code>dplyr</code> verbs</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>select()</code></td>
+<td>select columns</td>
+</tr>
+<tr class="even">
+<td><code>filter()</code></td>
+<td>filter rows</td>
+</tr>
+<tr class="odd">
+<td><code>arrange()</code></td>
+<td>re-order or arrange rows</td>
+</tr>
+<tr class="even">
+<td><code>mutate()</code></td>
+<td>create new columns</td>
+</tr>
+<tr class="odd">
+<td><code>summarize()</code></td>
+<td>summarize values</td>
+</tr>
+<tr class="even">
+<td><code>group_by()</code></td>
+<td>allows for group operations in the “split-apply-combine” concept</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="pipe-operator" class="section level3">
+<h3>Pipe operator: %&gt;%</h3>
+<p>Before we go any futher, let’s introduce the
+pipe operator: <code>%&gt;%</code>. In our <code>stocks</code> example,
+we briefly saw this symbol. It is called the
+pipe operator. <code>dplyr</code> imports
+this operator from another package
+(<code>magrittr</code>)
+<a href="http://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html">see help file here</a>.
+This operator allows you to pipe the output
+from one function to the input of another
+function. Instead of nesting functions
+(reading from the inside to the
+outside), the idea of of piping is to
+read the functions from left to right.</p>
+</div>
+<div id="dplyr-verbs-in-action" class="section level3">
+<h3><code>dplyr</code> verbs in action</h3>
+<p>The two most basic functions are <code>select()</code> and
+<code>filter()</code> which selects columns and filters
+rows, respectively.</p>
+<div id="selecting-columns-using-select" class="section level4">
+<h4>Selecting columns using <code>select()</code></h4>
+<p>To select all the columns <em>except</em> a
+specific column, use the “-” (subtraction) operator
+(also known as negative indexing).</p>
+<pre class="r"><code>gapminder %&gt;% 
+    select(-lifeExp)</code></pre>
+<pre><code>## # A tibble: 1,704 x 5
+##    country     continent  year      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952  8425333      779.
+##  2 Afghanistan Asia       1957  9240934      821.
+##  3 Afghanistan Asia       1962 10267083      853.
+##  4 Afghanistan Asia       1967 11537966      836.
+##  5 Afghanistan Asia       1972 13079460      740.
+##  6 Afghanistan Asia       1977 14880372      786.
+##  7 Afghanistan Asia       1982 12881816      978.
+##  8 Afghanistan Asia       1987 13867957      852.
+##  9 Afghanistan Asia       1992 16317921      649.
+## 10 Afghanistan Asia       1997 22227415      635.
+## # … with 1,694 more rows</code></pre>
+<p>The function <code>select()</code> is much more
+powerful though. To select a range
+of columns by name, use the “:” (colon) operator</p>
+<pre class="r"><code>gapminder %&gt;% 
+  select(lifeExp:gdpPercap)</code></pre>
+<pre><code>## # A tibble: 1,704 x 3
+##    lifeExp      pop gdpPercap
+##      &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1    28.8  8425333      779.
+##  2    30.3  9240934      821.
+##  3    32.0 10267083      853.
+##  4    34.0 11537966      836.
+##  5    36.1 13079460      740.
+##  6    38.4 14880372      786.
+##  7    39.9 12881816      978.
+##  8    40.8 13867957      852.
+##  9    41.7 16317921      649.
+## 10    41.8 22227415      635.
+## # … with 1,694 more rows</code></pre>
+<p>To select all columns that start with the
+character string “c”, use the function <code>starts_with()</code></p>
+<pre class="r"><code>gapminder %&gt;% 
+  select(starts_with(&quot;c&quot;))</code></pre>
+<pre><code>## # A tibble: 1,704 x 2
+##    country     continent
+##    &lt;fct&gt;       &lt;fct&gt;    
+##  1 Afghanistan Asia     
+##  2 Afghanistan Asia     
+##  3 Afghanistan Asia     
+##  4 Afghanistan Asia     
+##  5 Afghanistan Asia     
+##  6 Afghanistan Asia     
+##  7 Afghanistan Asia     
+##  8 Afghanistan Asia     
+##  9 Afghanistan Asia     
+## 10 Afghanistan Asia     
+## # … with 1,694 more rows</code></pre>
+<p>Some additional options to select columns based
+on a specific criteria include</p>
+<ol style="list-style-type: decimal">
+<li><code>ends_with()</code> = Select columns that end with
+a character string</li>
+<li><code>contains()</code> = Select columns that contain
+a character string</li>
+<li><code>matches()</code> = Select columns that match a
+regular expression</li>
+<li><code>one_of()</code> = Select columns names that are
+from a group of names</li>
+</ol>
+</div>
+<div id="selecting-rows-using-filter" class="section level4">
+<h4>Selecting rows using <code>filter()</code></h4>
+<p>Let’s say we only want the data from 2007.</p>
+<p>To do this, we can use the <code>filter()</code> function
+to filter the rows for years in 2007.</p>
+<pre class="r"><code>gapminder %&gt;% 
+  filter(year == &quot;2007&quot;)</code></pre>
+<pre><code>## # A tibble: 142 x 6
+##    country     continent  year lifeExp       pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       2007    43.8  31889923      975.
+##  2 Albania     Europe     2007    76.4   3600523     5937.
+##  3 Algeria     Africa     2007    72.3  33333216     6223.
+##  4 Angola      Africa     2007    42.7  12420476     4797.
+##  5 Argentina   Americas   2007    75.3  40301927    12779.
+##  6 Australia   Oceania    2007    81.2  20434176    34435.
+##  7 Austria     Europe     2007    79.8   8199783    36126.
+##  8 Bahrain     Asia       2007    75.6    708573    29796.
+##  9 Bangladesh  Asia       2007    64.1 150448339     1391.
+## 10 Belgium     Europe     2007    79.4  10392226    33693.
+## # … with 132 more rows</code></pre>
+<p><strong>Note</strong>: you can use the boolean operators
+(e.g. <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>, <code>!=</code>, <code>%in%</code>)
+to create logical tests.</p>
+<p>For example, if we wanted only years
+after 2014, we can add a second criteria:</p>
+<pre class="r"><code>gapminder %&gt;% 
+  filter(year &gt; 1977)</code></pre>
+<pre><code>## # A tibble: 852 x 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1982    39.9 12881816      978.
+##  2 Afghanistan Asia       1987    40.8 13867957      852.
+##  3 Afghanistan Asia       1992    41.7 16317921      649.
+##  4 Afghanistan Asia       1997    41.8 22227415      635.
+##  5 Afghanistan Asia       2002    42.1 25268405      727.
+##  6 Afghanistan Asia       2007    43.8 31889923      975.
+##  7 Albania     Europe     1982    70.4  2780097     3631.
+##  8 Albania     Europe     1987    72    3075321     3739.
+##  9 Albania     Europe     1992    71.6  3326498     2497.
+## 10 Albania     Europe     1997    73.0  3428038     3193.
+## # … with 842 more rows</code></pre>
+</div>
+<div id="use-mutate-to-add-new-variables" class="section level4">
+<h4>Use <code>mutate()</code> to add new variables</h4>
+<p><code>mutate()</code> is a function that defines and inserts new
+variables into a tibble. You can refer to existing
+variables by name.</p>
+<pre class="r"><code>gapminder %&gt;%
+    filter(year==2007) %&gt;% 
+    select(-continent) %&gt;%
+    mutate(gdp = pop * gdpPercap)</code></pre>
+<pre><code>## # A tibble: 142 x 6
+##    country      year lifeExp       pop gdpPercap           gdp
+##    &lt;fct&gt;       &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+##  1 Afghanistan  2007    43.8  31889923      975.  31079291949.
+##  2 Albania      2007    76.4   3600523     5937.  21376411360.
+##  3 Algeria      2007    72.3  33333216     6223. 207444851958.
+##  4 Angola       2007    42.7  12420476     4797.  59583895818.
+##  5 Argentina    2007    75.3  40301927    12779. 515033625357.
+##  6 Australia    2007    81.2  20434176    34435. 703658358894.
+##  7 Austria      2007    79.8   8199783    36126. 296229400691.
+##  8 Bahrain      2007    75.6    708573    29796.  21112675360.
+##  9 Bangladesh   2007    64.1 150448339     1391. 209311822134.
+## 10 Belgium      2007    79.4  10392226    33693. 350141166520.
+## # … with 132 more rows</code></pre>
+</div>
+<div id="arrange-or-re-order-rows-using-arrange" class="section level4">
+<h4>Arrange or re-order rows using <code>arrange()</code></h4>
+<p>To arrange (or re-order) rows by a particular
+column such as the population, list the name of
+the column you want to arrange the rows by</p>
+<pre class="r"><code>gapminder %&gt;%     
+    filter(year==2007) %&gt;%
+    select(-continent) %&gt;%
+    mutate(gdp = pop * gdpPercap) %&gt;% 
+    arrange(gdp)</code></pre>
+<pre><code>## # A tibble: 142 x 6
+##    country                   year lifeExp     pop gdpPercap         gdp
+##    &lt;fct&gt;                    &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+##  1 Sao Tome and Principe     2007    65.5  199579     1598.  319014077.
+##  2 Comoros                   2007    65.2  710960      986.  701111696.
+##  3 Guinea-Bissau             2007    46.4 1472041      579.  852652874.
+##  4 Djibouti                  2007    54.8  496374     2082. 1033689705.
+##  5 Gambia                    2007    59.4 1688359      753. 1270911775.
+##  6 Liberia                   2007    45.7 3193942      415. 1323912407.
+##  7 Central African Republic  2007    44.7 4369038      706. 3084613079.
+##  8 Eritrea                   2007    58.0 4906585      641. 3146934084.
+##  9 Lesotho                   2007    42.6 2012649     1569. 3158513357.
+## 10 Burundi                   2007    49.6 8390505      430. 3608510288.
+## # … with 132 more rows</code></pre>
+<p>So if we wanted to figure out what were the top three
+countries with the largest <code>gdpPercap</code> in 2007, we could
+use the <code>desc()</code> function inside of
+<code>arrange()</code> to order rows in a descending order.</p>
+<pre class="r"><code>gapminder %&gt;% 
+  filter(year == 2007) %&gt;% 
+  arrange(desc(gdpPercap)) %&gt;% 
+  head(n=3)</code></pre>
+<pre><code>## # A tibble: 3 x 6
+##   country   continent  year lifeExp     pop gdpPercap
+##   &lt;fct&gt;     &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+## 1 Norway    Europe     2007    80.2 4627926    49357.
+## 2 Kuwait    Asia       2007    77.6 2505559    47307.
+## 3 Singapore Asia       2007    80.0 4553009    47143.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="data-visualization" class="section level1">
+<h1>Data visualization</h1>
+<div id="ggplot2" class="section level2">
+<h2>ggplot2</h2>
+<p><a href="http://ggplot2.org"><code>ggplot2</code></a> is a powerful data exploration and
+visualization package that can create graphics in R. It was created by
+<a href="http://had.co.nz">Hadley Wickham</a> when he was a graduate student at
+Iowa State University and is based on the principals defined in the
+<a href="http://www.amazon.com/The-Grammar-Graphics-Statistics-Computing/dp/0387245448">Grammar of Graphics</a>.</p>
+<div id="why-is-it-useful" class="section level4">
+<h4>Why is it useful?</h4>
+<p>The idea of the Grammar of Graphics is to break the graph into components
+and handle the components of a graph separately. The <code>ggplot2</code> package
+contains a set of functions that allow us to build the features of the
+graph in a series of layers for versatility and control.</p>
+<p>There are two main plotting functions in <code>ggplot2</code>:</p>
+<ul>
+<li><code>qplot()</code> = a quick plot, similar to the <code>plot()</code> function in base R</li>
+<li><code>ggplot()</code> = a “grammar of graphics” (gg) plot which is made up two
+components (a <code>ggplot()</code> object and at least one <code>geom</code> layer)</li>
+</ul>
+<p>The <code>ggplot2</code> is loaded whenever you load <code>tidyverse</code>, but you can
+always load it formally.</p>
+<pre class="r"><code>library(ggplot2)</code></pre>
+</div>
+</div>
+<div id="life-expectancy-and-gdp-per-capita" class="section level2">
+<h2>Life expectancy and GDP per capita</h2>
+<p>To try and answer our first question we will make a <em>scatterplot</em>.
+We will do this for the latest entry in our database which is:</p>
+<pre class="r"><code>max( gapminder$year )</code></pre>
+<pre><code>## [1] 2007</code></pre>
+<p>We will first make a quick plot of these two variables.</p>
+<div id="qplot" class="section level4">
+<h4><code>qplot</code></h4>
+<p>The <code>qplot</code> function allows us to produce simple plots, similar to
+<code>plot</code> in base R. The main input of <code>qplot</code> is an <code>x</code> and <code>y</code> argument,
+but it also accepts a data set (<code>data</code>) where the <code>x</code> and <code>y</code> variables are
+located.</p>
+<p>To create a scatter-plot of life expectancy versus GDP per capita
+for 2007, we start by creating a subset of the data with only the 2007 year.</p>
+<pre class="r"><code>dat &lt;- filter(gapminder, year==2007)</code></pre>
+<p>Why does this not work?</p>
+<pre class="r"><code>qplot(x = gdpPercap, y = lifeExp) </code></pre>
+<p>We need to specify where to get these values from. Instead, we can
+use the vectors of <code>dat</code> directly</p>
+<pre class="r"><code>## need to specify where variables are located
+qplot(x = dat$gdpPercap, y = dat$lifeExp) </code></pre>
+<p><img src="/post/2019-03-13-introduction-to-tidyverse-2019_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>However, a cleaner way to do this does not define <code>dat</code> and instead uses the <code>data</code> argument:</p>
+<pre class="r"><code>## instead of having to specify name of data frame each time, just list it once
+qplot(x = gdpPercap, y = lifeExp, data = filter(gapminder, year==2007))</code></pre>
+<p><img src="/post/2019-03-13-introduction-to-tidyverse-2019_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>If youw ant to add labels to the x and y axis, you can use the
+<code>xlab</code> and <code>ylab</code> arguments. You can read the help file to
+check out other arguments available in the function.</p>
+<pre class="r"><code>qplot(x = gdpPercap, y = lifeExp, 
+      data = filter(gapminder, year==2007), 
+      xlab = &quot;GDP per Capita&quot;, 
+      ylab = &quot;Life Expectancy&quot;, 
+      main = &quot;Data from Gapminder&quot;)</code></pre>
+<p><img src="/post/2019-03-13-introduction-to-tidyverse-2019_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>From this plot, we see that there is a wide variability in
+life expectancy for the lower income countries and then
+somewhat of a positive trend. However, there are many
+countries with incomes below 5,000 dollars per person and
+it is hard to see differences between these. Next we
+will now learn about the grammar of graphics and create
+a series of visualizations.</p>
+</div>
+</div>
+<div id="ggplot" class="section level2">
+<h2><code>ggplot</code></h2>
+<p>This function is the implementation of the “Grammar of Graphics”
+that allows us to build layers of graphical elements to produce
+plots. As explained by Hadley Wickham</p>
+<blockquote>
+<p>the grammar tells us that a statistical graphic is a mapping from data to aesthetic attributes (colour, shape, size) of geometric objects (points, lines, bars). The plot may also contain statistical transformations of the data and is drawn on a specific coordinates system.</p>
+</blockquote>
+<div id="terminology" class="section level4">
+<h4>Terminology</h4>
+<ul>
+<li><strong>ggplot</strong> - the main function where you specify the data set and variables to plot (this is where we define the <code>x</code> and
+<code>y</code> variable names)</li>
+<li><strong>geoms</strong> - geometric objects
+<ul>
+<li>e.g. <code>geom_point()</code>, <code>geom_bar()</code>, <code>geom_line()</code>, <code>geom_histogram()</code></li>
+</ul></li>
+<li><strong>aes</strong> - aesthetics
+<ul>
+<li>shape, transparency, color, fill, linetype</li>
+</ul></li>
+<li><strong>scales</strong> - define how your data will be plotted
+<ul>
+<li>continuous, discrete, log, etc</li>
+</ul></li>
+</ul>
+<p>There are three ways to initialize a <code>ggplot()</code> object.</p>
+<p>An empty ggplot object</p>
+<pre class="r"><code>ggplot()         </code></pre>
+<p><img src="/post/2019-03-13-introduction-to-tidyverse-2019_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>A ggplot object associated with a dataset</p>
+<pre class="r"><code>gapminder %&gt;% 
+    filter(year==2007) %&gt;% 
+    ggplot()</code></pre>
+<p><img src="/post/2019-03-13-introduction-to-tidyverse-2019_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p>or a ggplot object with a dataset and <code>x</code> and <code>y</code> defined</p>
+<pre class="r"><code>gapminder %&gt;% 
+    filter(year==2007) %&gt;% 
+    ggplot(aes(x=gdpPercap, y = lifeExp))</code></pre>
+<p><img src="/post/2019-03-13-introduction-to-tidyverse-2019_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+<div id="creating-your-first-ggplot" class="section level4">
+<h4>Creating your first ggplot()</h4>
+<p>We just used the function <code>aes()</code> which is an aesthetic mapping
+function inside the <code>ggplot()</code> object. We use this function to
+specify plot attributes (e.g. <code>x</code> and <code>y</code> variable names) that
+will not change as we add more layers.</p>
+<p>Anything that goes in the <code>ggplot()</code> object becomes
+a global setting. From there, we use the <code>geom</code> objects to add
+more layers to the base <code>ggplot()</code> object.
+These will define what we are interested in
+illustrating using the data.</p>
+<p>Earlier we noticed that there are many countries with
+incomes below 5,000 dollars per person and it is hard to see
+differences between these. We can examine just this variable
+with a histogram. Here we would use a different geometry:</p>
+<pre class="r"><code>gapminder %&gt;% 
+    filter(year==2007) %&gt;% 
+    ggplot(aes(x=gdpPercap)) + geom_histogram()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="/post/2019-03-13-introduction-to-tidyverse-2019_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p>The histogram shows very large tails. We may do better by
+transforming the data. For data like this, the log
+transformation seems to work well. It also has a nice economic
+interpretation related to percent growth: in <span class="math inline">\(log_{10}\)</span> a
+change of 1 means the country is 10 times richer.</p>
+<p>So how do we make the x-axis in the log scale? It is convenient to have <a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">this</a> cheat sheet around when using ggplot2. From there we see that <code>scale_x_log10</code> does what we want.</p>
+<pre class="r"><code>gapminder %&gt;% 
+    filter(year==2007) %&gt;% 
+    ggplot(aes(x=gdpPercap)) + 
+    geom_histogram(bins=25) + 
+    scale_x_log10()</code></pre>
+<p><img src="/post/2019-03-13-introduction-to-tidyverse-2019_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p>We no longer see extreme tails. The scatter plot now looks much more informative:</p>
+<p>Now we can remake the scatter plot but now make
+sure the x-axis is in a log-scale</p>
+<pre class="r"><code>gapminder %&gt;% 
+    filter(year==2007) %&gt;% 
+    ggplot(aes(x=gdpPercap, y = lifeExp)) +
+    geom_point() + scale_x_log10()</code></pre>
+<p><img src="/post/2019-03-13-introduction-to-tidyverse-2019_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p>We can also do this:</p>
+<pre class="r"><code>gapminder %&gt;% 
+    filter(year==2007) %&gt;% 
+    ggplot(aes(x=log10(gdpPercap), y = lifeExp)) +
+    geom_point()</code></pre>
+<p><img src="/post/2019-03-13-introduction-to-tidyverse-2019_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p>We can also use other really great packages, such as <code>ggrepel</code>:</p>
+<pre class="r"><code>library(ggrepel)
+gapminder %&gt;% 
+    filter(year==2007) %&gt;% 
+    ggplot(aes(x=gdpPercap, y = lifeExp)) +
+    geom_point(color = &#39;red&#39;,) + scale_x_log10() + 
+    geom_text_repel(aes(label = country), size = 2) +
+  theme_classic() </code></pre>
+<p><img src="/post/2019-03-13-introduction-to-tidyverse-2019_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p>Now you are ready to make presentation quality data visualizations!</p>
+</div>
+</div>
+</div>
+<div id="cheatsheets" class="section level1">
+<h1>Cheatsheets</h1>
+<ul>
+<li><a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">Data Visualization with ggplot2 from RStudio</a></li>
+</ul>
+</div>
