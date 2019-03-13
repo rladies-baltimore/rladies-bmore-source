@@ -616,5 +616,12 @@ Now you are ready to make presentation quality data visualizations!
 * [Data Visualization with ggplot2 from RStudio](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
 
 
+## Confessions and countermeasures with the `tidyverse`  
+
+Here are the awesome [slides](../../slides/2019-03-13-tidyverse-confessions.pdf) from 
+Rachael Workman (PhD student in 
+[Biochemistry, Cellular and Molecular Biology](http://bcmb.bs.jhmi.edu) (BCMB) program) 
+where she discusses  
+_Confessions and Countermeasures: my not ideal R habits and how the Tidyverse resolved them_
 
 
